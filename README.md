@@ -8,11 +8,11 @@ O sistema permite o cadastro de usuários contendo os seguintes dados: nome, ema
 
 Tecnologias Utilizadas
 
-O projeto foi desenvolvido utilizando as seguintes tecnologias: HTML5, CSS3, PHP e MySQL.
+O projeto foi desenvolvido utilizando as seguintes tecnologias: HTML5, CSS3, PHP, JAVASCRIPT e MySQL.
 
 Estrutura do Projeto
 
-O projeto está organizado da seguinte forma: uma pasta principal chamada Cadastro_Usuario, contendo o arquivo index.html responsável pelo formulário, o arquivo cadastro.php que realiza o processamento e validação dos dados, e uma pasta css contendo o arquivo styles.css para a estilização da aplicação.
+O projeto está organizado da seguinte forma: uma pasta principal chamada Cadastro_Usuario, contendo o arquivo index.html responsável pelo formulário, o arquivo cadastro.php que realiza o processamento e validação dos dados,uma pasta css contendo o arquivo styles.css para a estilização da aplicação e uma pasta js contendo o arquivo scrpt.js que permite ao usuário visualizar ou esconder a senha digitada no campo de formulário, melhorando a usabilidade e reduzindo erros de digitação.
 
 Como Executar o Projeto
 
