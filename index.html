@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Cadastro</h2>
+
+    <form method="POST" action="cadastro.php">
+
+        <label>Nome:</label>
+        <input type="text" name="nome" required minlength="3">
+
+        <label>Email:</label>
+        <input 
+            type="email" 
+            name="email" 
+            required
+            pattern="[a-zA-Z0-9._%+-]+@gmail\.com"
+            title="Digite um email válido do Gmail (@gmail.com)"
+        >
+
+        <label>Senha:</label>
+        <input type="password" id="senha" name="senha" required minlength="6">
+
+
+        <div class="mostrar-senha">
+            <input type="checkbox" id="checkSenha" onclick="toggleSenha()">
+            <label for="checkSenha">Mostrar senha</label>
+        </div>
+
+        <label>Mensagem:</label>
+        <textarea 
+            name="mensagem" 
+            maxlength="250"
+            placeholder="Digite sua mensagem..."></textarea>
+
+        <button type="submit">Enviar</button>
+
+    </form>
+
+</div>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>
