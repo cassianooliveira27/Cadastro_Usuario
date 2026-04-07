@@ -1,4 +1,8 @@
 <?php
+require 'conexao.php'; 
+
+$mensagemSucesso = '';
+$erros = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -10,8 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = limpar($_POST["email"] ?? '');
     $senha = limpar($_POST["senha"] ?? '');
     $mensagem = limpar($_POST["mensagem"] ?? '');
-
-    $erros = [];
 
     // validações
     if (strlen($nome) < 3) {
@@ -30,50 +32,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $erros[] = "Mensagem excede 250 caracteres.";
     }
 
-    if (!empty($erros)) {
-        echo "<h3>Erros:</h3>";
-        foreach ($erros as $erro) {
-            echo "<p style='color:red;'>$erro</p>";
+    if (empty($erros)) {
+        $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+
+        try {
+            $stmt = $pdo->prepare("INSERT INTO usuarios (nome, email, senha, mensagem) VALUES (:nome, :email, :senha, :mensagem)");
+            $stmt->execute([
+                ':nome' => $nome,
+                ':email' => $email,
+                ':senha' => $senhaHash,
+                ':mensagem' => $mensagem
+            ]);
+
+            $mensagemSucesso = "Dados cadastrados com sucesso!";
+        } catch (PDOException $e) {
+            $erros[] = "Erro ao salvar: " . $e->getMessage();
         }
-        exit;
-    }
-
-    // Hash da senha
-    $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-
-    // Conexão PDO
-    $dsn = "mysql:host=localhost;dbname=cadastro_db;charset=utf8";
-    $user = "root";
-    $pass = "";
-
-    try {
-        $pdo = new PDO($dsn, $user, $pass);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        // Preparando a query
-        $stmt = $pdo->prepare("INSERT INTO usuarios (nome, email, senha, mensagem) VALUES (:nome, :email, :senha, :mensagem)");
-        $stmt->bindParam(':nome', $nome);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':senha', $senhaHash);
-        $stmt->bindParam(':mensagem', $mensagem);
-
-        $stmt->execute();
-
-        echo "<h2>Dados cadastrados com sucesso!</h2>";
-        echo "<p><strong>Nome:</strong> $nome</p>";
-        echo "<p><strong>Email:</strong> $email</p>";
-        echo "<p><strong>Mensagem:</strong> $mensagem</p>";
-
-    } catch (PDOException $e) {
-        echo "Erro ao salvar: " . $e->getMessage();
-        exit;
     }
 }
 ?>
 
-    echo "<h2>Dados cadastrados com sucesso!</h2>";
-    echo "<p><strong>Nome:</strong> $nome</p>";
-    echo "<p><strong>Email:</strong> $email</p>";
-    echo "<p><strong>Mensagem:</strong> $mensagem</p>";
-}
-?>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Usuário</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="container">
+    <form method="POST" action="">
+        <h2>Cadastro de Usuário</h2>
+
+        <?php if (!empty($erros)): ?>
+            <div class="erros">
+                <?php foreach ($erros as $erro): ?>
+                    <p><?php echo $erro; ?></p>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($mensagemSucesso): ?>
+            <div class="sucesso">
+                <p><?php echo $mensagemSucesso; ?></p>
+            </div>
+        <?php endif; ?>
+
+        <input type="text" name="nome" placeholder="Nome" required>
+        <input type="email" name="email" placeholder="Email (somente Gmail)" required>
+        <input type="password" name="senha" placeholder="Senha (mín. 6 caracteres)" required>
+        <textarea name="mensagem" placeholder="Mensagem (até 250 caracteres)" maxlength="250"></textarea>
+        <button type="submit">Cadastrar</button>
+    </form>
+</div>
+
+</body>
+</html>
