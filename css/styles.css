@@ -1,59 +1,68 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    padding: 50px;
+body 
+{ font-family: Arial, 
+    sans-serif; 
+ background:#f4f4f4; 
+ padding:50px; 
 }
-
-.container {
-    max-width: 400px;
-    margin: auto;
-    background: #fff;
-    padding: 20px 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+.container 
+{ max-width:500px; 
+ margin:auto; background:#fff; 
+ padding:20px 30px; 
+ border-radius:10px; 
+ box-shadow:0 0 15px rgba(0,0,0,0.1); 
 }
-
-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
+h2 {
+    text-align:center; 
+    margin-bottom:20px;
 }
-
 input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+    width:100%;
+    padding:10px; 
+    margin:10px 0; 
+    border-radius:5px; 
+    border:1px solid #ccc; 
+    box-sizing:border-box; 
 }
-
-button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background: #28a745;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
+button { 
+    width:100%; 
+    padding:10px; 
+    border:none;
+    border-radius:5px;
+    background:#28a745; 
+    color:#fff; font-size:16px;
+    cursor:pointer; 
 }
-
 button:hover {
-    background: #218838;
+    background:#218838;
 }
-
-.erros {
-    background: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
+.erros { 
+    background:#f8d7da; 
+    color:#721c24; 
+    padding:10px; 
+    border-radius:5px; 
+    margin-bottom:15px; 
 }
-
 .sucesso {
-    background: #d4edda;
-    color: #155724;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
+    background:#d4edda;
+    color:#155724; 
+    padding:10px; 
+    border-radius:5px; 
+    margin-bottom:15px;
+}
+table {
+    width:100%; 
+    border-collapse:collapse;
+    margin-bottom:20px; 
+}
+th, td {
+    border:1px solid #ccc;
+    padding:8px; 
+    text-align:left; 
+}
+a { 
+    text-decoration:none;
+   color:#007bff; 
+}
+a:hover {
+    text-decoration:underline;
 }
