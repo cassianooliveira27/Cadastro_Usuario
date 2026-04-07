@@ -38,25 +38,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    // Hash da senha
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
-    $conn = new mysqli("localhost", "root", "", "cadastro_db");
+    // Conexão PDO
+    $dsn = "mysql:host=localhost;dbname=cadastro_db;charset=utf8";
+    $user = "root";
+    $pass = "";
 
-    if ($conn->connect_error) {
-        die("Erro de conexão: " . $conn->connect_error);
-    }
+    try {
+        $pdo = new PDO($dsn, $user, $pass);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+        // Preparando a query
+        $stmt = $pdo->prepare("INSERT INTO usuarios (nome, email, senha, mensagem) VALUES (:nome, :email, :senha, :mensagem)");
+        $stmt->bindParam(':nome', $nome);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':senha', $senhaHash);
+        $stmt->bindParam(':mensagem', $mensagem);
 
-    $stmt = $conn->prepare("INSERT INTO usuarios (nome, email, senha, mensagem) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $nome, $email, $senhaHash, $mensagem);
+        $stmt->execute();
 
-    if (!$stmt->execute()) {
-        echo "Erro ao salvar: " . $stmt->error;
+        echo "<h2>Dados cadastrados com sucesso!</h2>";
+        echo "<p><strong>Nome:</strong> $nome</p>";
+        echo "<p><strong>Email:</strong> $email</p>";
+        echo "<p><strong>Mensagem:</strong> $mensagem</p>";
+
+    } catch (PDOException $e) {
+        echo "Erro ao salvar: " . $e->getMessage();
         exit;
     }
-
-    $stmt->close();
-    $conn->close();
+}
+?>
 
     echo "<h2>Dados cadastrados com sucesso!</h2>";
     echo "<p><strong>Nome:</strong> $nome</p>";
